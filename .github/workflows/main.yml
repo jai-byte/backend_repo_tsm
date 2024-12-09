@@ -60,4 +60,4 @@ jobs:
           sudo docker rm my-backend-container || true
 
           # Run the new container from the pulled image
-          sudo docker run -d --name my-backend-container -p 3000:3001 jaihub/my-be-img:latest
+          sudo docker run -d --name my-backend-container -p 3001:3000 jaihub/my-be-img:latest
