@@ -1,0 +1,11 @@
+node_modules
+logs
+  "AWS": {
+    "AccessKey": "AKIAVTQIEEOG6XHZIEMD",
+    "SecretKey": "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",
+    "BucketName": "serverqodequay/tajurba",
+    "region": "ap-south-1",
+    "S3Path": "https://arqosh.s3.ap-south-1.amazonaws.com/",
+    "SQS": {
+      "queueURL": "https://sqs.ap-south-1.amazonaws.com/249345467566/dev-email-queue"
+    }
