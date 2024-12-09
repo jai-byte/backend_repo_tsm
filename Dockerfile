@@ -1,29 +1,23 @@
-# Step 1: Set up a Node.js environment to build the app
-FROM node:18 AS build
+# Use a Node.js LTS base image
+FROM node:18-alpine
 
-# Set the working directory inside the container
-WORKDIR /app
+# Set the working directory in the container
+WORKDIR /usr/src/app
 
-# Step 2: Copy the package.json and package-lock.json (or yarn.lock) to the container
-COPY package.json package-lock.json ./
+# Copy package.json and package-lock.json to the working directory
+COPY package*.json ./
 
-# Step 3: Install the dependencies
+# Install dependencies
 RUN npm install
 
-# Step 4: Copy the rest of the application files into the container
+# Copy the entire application code into the container
 COPY . .
 
-# Step 5: Build the application
-RUN npm run build
+# Expose the port your application runs on
+EXPOSE 3000
 
-# Step 6: Set up the production environment using Nginx to serve the app
-FROM nginx:alpine
+# Define the environment variable for production
+ENV NODE_ENV=production
 
-# Copy the build output from the previous stage to the Nginx container
-COPY --from=build /app/build /usr/share/nginx/html
-
-# Expose the port that Nginx is listening on
-EXPOSE 80
-
-# Start Nginx when the container runs
-CMD ["nginx", "-g", "daemon off;"]
+# Run the application
+CMD ["npm", "start"]
