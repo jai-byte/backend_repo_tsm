@@ -7,8 +7,40 @@ on:
   pull_request:
     branches:
       - main
-
 jobs:
+  # SAST by SonarCloud Job
+  sonarcloud_sast:
+    name: Static Application Security Testing (SAST) by SonarCloud
+    runs-on: ubuntu-latest
+    steps:
+      - name: Checkout code
+        uses: actions/checkout@v4
+        with:
+          fetch-depth: 0  # Ensure full clone for better analysis relevance
+
+      - name: SonarCloud Scan
+        uses: SonarSource/sonarqube-scan-action@v4
+        env:
+          GITHUB_TOKEN: ${{ secrets.GT_TOKKEN }}  # Needed for PR information
+          SONAR_TOKEN: ${{ secrets.SONAR_TOKEN }}
+          SONAR_PROJECT_KEY: org-sonar-frnt_scan-backend  # Replace with your SonarCloud project key
+          SONAR_ORGANIZATION: org_sonar_frnt  # Replace with your SonarCloud organization key
+
+  # SCA by Snyk Job
+  snyk_scan:
+    name: Software Composition Analysis by Snyk
+    runs-on: ubuntu-latest
+    steps:
+      - name: Checkout code
+        uses: actions/checkout@v3
+
+      - name: Run Snyk to check for vulnerabilities
+        uses: snyk/actions/node@master
+        env:
+          SNYK_TOKEN: ${{ secrets.SNYK_TOKEN }}
+        with:
+          command: monitor
+  # Build and Push Image to Dockerhub and Create container on EC2
   build-and-deploy:
     runs-on: ubuntu-latest
 
