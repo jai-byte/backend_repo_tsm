@@ -24,7 +24,7 @@ jobs:
           GITHUB_TOKEN: ${{ secrets.GT_TOKKEN }}  # Needed for PR information
           SONAR_TOKEN: ${{ secrets.SONAR_TOKEN }}
           SONAR_PROJECT_KEY: org-sonar-frnt_scan-backend  # Replace with your SonarCloud project key
-          SONAR_ORGANIZATION: org_sonar_frnt  # Replace with your SonarCloud organization key
+          SONAR_ORGANIZATION: org-sonar-frnt  # Replace with your SonarCloud organization key
 
   # SCA by Snyk Job
   snyk_scan:
